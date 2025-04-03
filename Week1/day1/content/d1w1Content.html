@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شرح ويدجت فلاتر</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+        .header {
+            background: #34b8e4;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            border-bottom: 5px solid #0288d1;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #0288d1;
+            border-bottom: 2px solid #0288d1;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        h3 {
+            color: #666;
+            font-size: 18px;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+        pre {
+            background: #282c34;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        pre code {
+            display: block;
+            padding: 5px;
+            direction: ltr;
+        }
+        ul {
+            margin: 10px 0;
+            padding-left: 20px;
+            color: #666;
+        }
+        ul li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .footer {
+            background: #0288d1;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">شرح ويدجت فلاتر</div>
+    <div class="container">
+        <!-- Text Widget -->
+        <h2>1️⃣ Text Widget</h2>
+        <p>تُستخدم لعرض النصوص داخل التطبيق. يمكنك التحكم في تنسيق النصوص مثل اللون، الحجم، والمحاذاة.</p>
+        <h3>أهم الخصائص:</h3>
+        <ul>
+            <li><strong>textAlign:</strong> تحديد محاذاة النص (يسار، يمين، مركز).</li>
+            <li><strong>style:</strong> تنسيق النص (حجم الخط، اللون، الوزن، العائلة).</li>
+            <li><strong>maxLines:</strong> تحديد أقصى عدد للأسطر.</li>
+            <li><strong>overflow:</strong> كيفية التعامل مع النصوص الطويلة.</li>
+        </ul>
+        <pre>
+<code>
+Text(
+  'مرحبًا بك في فلاتر!',
+  textAlign: TextAlign.center,
+  style: TextStyle(
+    fontSize: 24, 
+    fontWeight: FontWeight.bold, 
+    color: Colors.blue
+  ),
+  maxLines: 1,
+  overflow: TextOverflow.ellipsis,
+)
+</code>
+        </pre>
+
+        <!-- Image Widget -->
+        <h2>2️⃣ Image Widget</h2>
+        <p>تُستخدم لعرض الصور سواء من الملفات المحلية أو من الإنترنت. يمكنك التحكم في حجم الصورة وكيفية ملء المساحة المتاحة.</p>
+        <h3>أهم الخصائص:</h3>
+        <ul>
+            <li><strong>image:</strong> تحديد مصدر الصورة (من الإنترنت أو من الملفات المحلية).</li>
+            <li><strong>width/height:</strong> تحديد أبعاد الصورة.</li>
+            <li><strong>fit:</strong> التحكم في كيفية ملء الصورة للحاوية.</li>
+            <li><strong>alignment:</strong> تحديد محاذاة الصورة داخل الحاوية.</li>
+        </ul>
+        <pre>
+<code>
+Image.asset(
+  'assets/images/flutter_logo.png', 
+  width: 100, 
+  height: 100, 
+  fit: BoxFit.cover
+)
+</code>
+        </pre>
+        <pre>
+<code>
+Image.network(
+  'https://flutter.dev/assets/images/shared/brand/flutter-lockup.png', 
+  width: 100, 
+  height: 100,
+  fit: BoxFit.contain
+)
+</code>
+        </pre>
+
+        <!-- Container Widget -->
+        <h2>3️⃣ Container Widget</h2>
+        <p>تُستخدم كعنصر حاوي لتنظيم العناصر الأخرى. يمكنك التحكم في الأبعاد، الألوان، الحدود، الهوامش، والمسافات الداخلية.</p>
+        <h3>أهم الخصائص:</h3>
+        <ul>
+            <li><strong>width/height:</strong> تحديد أبعاد الحاوية.</li>
+            <li><strong>color:</strong> تحديد لون الخلفية.</li>
+            <li><strong>padding:</strong> إضافة مسافات داخلية.</li>
+            <li><strong>margin:</strong> إضافة مسافات خارجية.</li>
+            <li><strong>decoration:</strong> تخصيص الخلفية والحدود.</li>
+        </ul>
+        <pre>
+<code>
+Container(
+  width: 200, 
+  height: 100, 
+  padding: EdgeInsets.all(10),
+  margin: EdgeInsets.symmetric(horizontal: 20),
+  decoration: BoxDecoration(
+    color: Colors.blue, 
+    borderRadius: BorderRadius.circular(15),
+    boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
+  ),
+  child: Center(
+    child: Text(
+      'أنا كونتينر!',
+      style: TextStyle(color: Colors.white, fontSize: 18),
+    ),
+  ),
+)
+</code>
+        </pre>
+
+        <!-- Row & Column Widgets -->
+        <h2>4️⃣ Row & Column Widgets</h2>
+        <p>تُستخدم لتنظيم العناصر بشكل أفقي (Row) أو عمودي (Column).</p>
+        <h3>أهم الخصائص:</h3>
+        <ul>
+            <li><strong>mainAxisAlignment:</strong> تحديد محاذاة العناصر في الاتجاه الرئيسي (أفقي/عمودي).</li>
+            <li><strong>crossAxisAlignment:</strong> تحديد المحاذاة العمودية (يسار، يمين، وسط).</li>
+        </ul>
+        <pre>
+<code>
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    Icon(Icons.star, color: Colors.yellow, size: 30),
+    Icon(Icons.star, color: Colors.yellow, size: 30),
+    Icon(Icons.star, color: Colors.yellow, size: 30),
+  ]
+)
+</code>
+        </pre>
+        <pre>
+<code>
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    Text('العنصر الأول'),
+    SizedBox(height: 10),
+    Text('العنصر الثاني'),
+  ]
+)
+</code>
+        </pre>
+
+        <!-- Padding Widget -->
+        <h2>5️⃣ Padding Widget</h2>
+        <p>تُستخدم لإضافة مسافات داخلية حول العناصر لتجنب التكدس.</p>
+        <h3>أهم الخصائص:</h3>
+        <ul>
+            <li><strong>padding:</strong> تحديد المسافات الداخلية حول العنصر.</li>
+            <li><strong>child:</strong> العنصر الذي سيتم إضافة Padding حوله.</li>
+        </ul>
+        <pre>
+<code>
+Padding(
+  padding: EdgeInsets.all(16.0),
+  child: Text(
+    'هذا نص داخل ويدجت Padding!', 
+    style: TextStyle(fontSize: 20)
+  )
+)
+</code>
+        </pre>
+    </div>
+    <div class="footer">&copy; 2025 - جميع الحقوق محفوظة</div>
+</body>
+</html>

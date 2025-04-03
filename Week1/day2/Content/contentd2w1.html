@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شرح ويدجت Flutter بالتفصيل</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        pre{
+            direction: ltr;
+        }
+        
+        .widget-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .widget-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+        }
+        
+        .widget-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .widget-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .widget-icon {
+            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .widget-body {
+            padding: 25px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-left: 10px;
+            color: var(--secondary-color);
+        }
+        
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: 'Dart';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 0 0 8px 0;
+            font-size: 0.8rem;
+        }
+        
+        .example-preview {
+            background: var(--light-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 1px dashed var(--secondary-color);
+        }
+        
+        .example-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .example-title i {
+            margin-left: 8px;
+        }
+        
+        .note {
+            background: #fff8e1;
+            padding: 15px;
+            border-right: 4px solid var(--warning-color);
+            border-radius: 0 8px 8px 0;
+            margin: 15px 0;
+        }
+        
+        .note-title {
+            font-weight: bold;
+            color: var(--warning-color);
+            margin-bottom: 8px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .feature-title {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: var(--dark-color);
+            color: white;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .widget-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .widget-icon {
+                margin-top: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation classes */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>شرح ويدجت Flutter بالتفصيل الممل</h1>
+            <p class="subtitle">دليل شامل لكل ما تحتاج معرفته عن أهم ويدجتات Flutter مع أمثلة عملية</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="widget-card animate-fade">
+            <div class="widget-header">
+                <h2 class="widget-title">1. Stack Widget</h2>
+                <div class="widget-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-question-circle"></i>ما هي ويدجت Stack؟</h3>
+                    <p>Stack هي ويدجت تُستخدم لتراص العناصر فوق بعضها البعض في مكان واحد. إنها تشبه تمامًا وضع أوراق اللعب فوق بعضها، حيث يمكنك التحكم في ترتيب العناصر وموقعها بدقة.</p>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-tools"></i>المشكلة التي تحلها</h3>
+                    <p>تستخدم Stack عندما تحتاج لترتيب العناصر بحيث تكون مرئية فوق بعضها في نفس المساحة. بدون Stack، سيكون من الصعب تحقيق تأثيرات مثل:</p>
+                    <ul style="padding-right: 20px; margin-top: 10px;">
+                        <li>عرض نص فوق صورة</li>
+                        <li>إضافة علامة مائية (Watermark)</li>
+                        <li>إنشاء أزرار عائمة (FAB)</li>
+                        <li>تصميم بطاقات ذات طبقات متعددة</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-lightbulb"></i>متى نستخدمها؟</h3>
+                    <div class="grid">
+                        <div class="feature-box">
+                            <h4 class="feature-title">تراكب العناصر</h4>
+                            <p>عندما تريد وضع عنصر فوق آخر، مثل نص فوق صورة أو زر فوق خريطة.</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4 class="feature-title">عناصر متحركة</h4>
+                            <p>لإنشاء عناصر واجهة متحركة تطفو فوق المحتوى الرئيسي.</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4 class="feature-title">تصاميم معقدة</h4>
+                            <p>لتنفيذ تصاميم معقدة تتطلب طبقات متعددة من العناصر.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-code"></i>مثال عملي</h3>
+                    <div class="code-block">
+                        <pre>
+Stack(
+  children: &lt;Widget&gt;[
+    // الخلفية (الصورة)
+    Image.network('https://example.com/background.jpg'),
+    
+    // النص المتراكب
+    Positioned(
+      bottom: 20,
+      left: 20,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        color: Colors.black54,
+        child: Text(
+          'عنوان الصورة',
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ),
+    
+    // زر عائم
+    Positioned(
+      top: 20,
+      right: 20,
+      child: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.favorite),
+      ),
+    ),
+  ],
+)</pre>
+                    </div>
+                    
+                    <div class="example-preview">
+                        <h4 class="example-title"><i class="fas fa-eye"></i> كيف سيظهر التصميم</h4>
+                        <div style="position: relative; height: 200px; background: #ddd; border-radius: 8px;">
+                            <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 5px; color: white; font-weight: bold;">عنوان الصورة</div>
+                            <div style="position: absolute; top: 20px; right: 20px; width: 50px; height: 50px; background: #e74c3c; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-title">ملاحظة مهمة</div>
+                        <p>يتم ترتيب العناصر في Stack حسب ترتيبها في قائمة children، حيث يتم عرض العنصر الأول في الأسفل والعنصر الأخير في الأعلى. يمكنك استخدام Positioned للتحكم في موقع العنصر بدقة داخل الـ Stack.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="widget-card animate-fade delay-1">
+            <div class="widget-header">
+                <h2 class="widget-title">2. Expanded Widget</h2>
+                <div class="widget-icon">
+                    <i class="fas fa-expand"></i>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-question-circle"></i>ما هي ويدجت Expanded؟</h3>
+                    <p>Expanded هي ويدجت تُستخدم لتوسيع العنصر الفرعي لملء المساحة المتاحة داخل الصف (Row) أو العمود (Column). يمكن اعتبارها كوسيلة لإخبار Flutter "خذ المساحة المتبقية".</p>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-tools"></i>المشكلة التي تحلها</h3>
+                    <p>بدون Expanded، قد تواجه مشاكل في:</p>
+                    <ul style="padding-right: 20px; margin-top: 10px;">
+                        <li>توزيع المساحة بين العناصر بشكل متساوٍ</li>
+                        <li>جعل بعض العناصر تأخذ مساحة أكبر من غيرها</li>
+                        <li>التعامل مع المساحة المتبقية في الشاشة</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-lightbulb"></i>متى نستخدمها؟</h3>
+                    <div class="grid">
+                        <div class="feature-box">
+                            <h4 class="feature-title">توزيع المساحة</h4>
+                            <p>عندما تريد توزيع المساحة بين عدة عناصر بنسب مختلفة.</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4 class="feature-title">تصميم متجاوب</h4>
+                            <p>لجعل بعض العناصر تتوسع أو تتقلص حسب حجم الشاشة.</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4 class="feature-title">ملء الفراغ</h4>
+                            <p>عندما تريد أن يأخذ عنصر ما كل المساحة المتبقية.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-code"></i>مثال عملي</h3>
+                    <div class="code-block">
+                        <pre>
+Row(
+  children: &lt;Widget&gt;[
+    // عنصر بحجم ثابت
+    Container(
+      width: 100,
+      height: 100,
+      color: Colors.blue,
+      child: Center(child: Text('ثابت')),
+    ),
+    
+    // عنصر قابل للتوسع
+    Expanded(
+      flex: 2,
+      child: Container(
+        height: 100,
+        color: Colors.green,
+        child: Center(child: Text('موسع (2)')),
+      ),
+    ),
+    
+    // عنصر قابل للتوسع آخر
+    Expanded(
+      flex: 1,
+      child: Container(
+        height: 100,
+        color: Colors.red,
+        child: Center(child: Text('موسع (1)')),
+      ),
+    ),
+  ],
+)</pre>
+                    </div>
+                    
+                    <div class="example-preview">
+                        <h4 class="example-title"><i class="fas fa-eye"></i> كيف سيظهر التصميم</h4>
+                        <div style="display: flex; width: 100%; margin-bottom: 10px;">
+                            <div style="width: 100px; height: 100px; background: #3498db; display: flex; align-items: center; justify-content: center; color: white;">ثابت</div>
+                            <div style="flex: 2; height: 100px; background: #2ecc71; display: flex; align-items: center; justify-content: center; color: white;">موسع (2)</div>
+                            <div style="flex: 1; height: 100px; background: #e74c3c; display: flex; align-items: center; justify-content: center; color: white;">موسع (1)</div>
+                        </div>
+                        <p style="font-size: 0.9em; color: #666;">ملاحظة: العنصر الأخضر يأخذ ضعف مساحة العنصر الأحمر بسبب خاصية flex.</p>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-title">معلومة تقنية</div>
+                        <p>تستخدم خاصية flex لتحديد نسبة المساحة التي سيأخذها كل Expanded بالنسبة للآخرين. في المثال أعلاه، العنصر الأخضر لديه flex: 2 والعنصر الأحمر لديه flex: 1، مما يعني أن الأخضر سيأخذ ضعف مساحة الأحمر.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="widget-card animate-fade delay-2">
+            <div class="widget-header">
+                <h2 class="widget-title">3. Wrap Widget</h2>
+                <div class="widget-icon">
+                    <i class="fas fa-align-left"></i>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-question-circle"></i>ما هي ويدجت Wrap؟</h3>
+                    <p>Wrap هي ويدجت تعرض أطفالها في اتجاه أفقي أو عمودي، وعندما يمتلئ المساحة في الاتجاه الرئيسي، تنتقل العناصر إلى سطر أو عمود جديد تلقائيًا.</p>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-tools"></i>المشكلة التي تحلها</h3>
+                    <p>بدون Wrap، قد تواجه مشاكل مثل:</p>
+                    <ul style="padding-right: 20px; margin-top: 10px;">
+                        <li>خروج العناصر من حدود الشاشة عند استخدام Row مع عناصر كثيرة</li>
+                        <li>الحاجة إلى حساب عدد العناصر في كل صف يدويًا</li>
+                        <li>صعوبة إنشاء تخطيطات متجاوبة مع أحجام شاشات مختلفة</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-lightbulb"></i>متى نستخدمها؟</h3>
+                    <div class="grid">
+                        <div class="feature-box">
+                            <h4 class="feature-title">علامات التصنيف</h4>
+                            <p>لعرض مجموعة من العلامات أو الكلمات المفتاحية.</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4 class="feature-title">قوائم متجاوبة</h4>
+                            <p>لإنشاء قوائم تتكيف مع حجم الشاشة تلقائيًا.</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4 class="feature-title">عناصر متغيرة العدد</h4>
+                            <p>عندما لا تعرف عدد العناصر مسبقًا أو قد يتغير.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-code"></i>مثال عملي</h3>
+                    <div class="code-block">
+                        <pre>
+Wrap(
+  spacing: 8.0, // المسافة الأفقية بين العناصر
+  runSpacing: 4.0, // المسافة العمودية بين الأسطر
+  children: List.generate(
+    10,
+    (index) => Chip(
+      avatar: CircleAvatar(
+        backgroundColor: Colors.blue,
+        child: Text('${index + 1}'),
+      ),
+      label: Text('عنصر ${index + 1}'),
+    ),
+  ),
+)</pre>
+                    </div>
+                    
+                    <div class="example-preview">
+                        <h4 class="example-title"><i class="fas fa-eye"></i> كيف سيظهر التصميم</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 8px; row-gap: 4px;">
+                            <div style="background: #eee; border-radius: 16px; padding: 4px 8px 4px 4px; display: inline-flex; align-items: center;">
+                                <div style="width: 24px; height: 24px; background: #3498db; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; margin-left: 4px;">1</div>
+                                <span style="font-size: 14px;">عنصر 1</span>
+                            </div>
+                            <div style="background: #eee; border-radius: 16px; padding: 4px 8px 4px 4px; display: inline-flex; align-items: center;">
+                                <div style="width: 24px; height: 24px; background: #3498db; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; margin-left: 4px;">2</div>
+                                <span style="font-size: 14px;">عنصر 2</span>
+                            </div>
+                            <!-- عناصر إضافية -->
+                            <div style="background: #eee; border-radius: 16px; padding: 4px 8px 4px 4px; display: inline-flex; align-items: center;">
+                                <div style="width: 24px; height: 24px; background: #3498db; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; margin-left: 4px;">3</div>
+                                <span style="font-size: 14px;">عنصر 3</span>
+                            </div>
+                            <!-- يمكن إضافة المزيد من العناصر هنا -->
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-title">إعدادات متقدمة</div>
+                        <p>يمكنك التحكم في اتجاه الـ Wrap باستخدام الخاصية direction والتي يمكن أن تكون:</p>
+                        <ul style="padding-right: 20px; margin-top: 10px;">
+                            <li>Axis.horizontal (افتراضي) - العناصر تنتقل إلى أسطر جديدة</li>
+                            <li>Axis.vertical - العناصر تنتقل إلى أعمدة جديدة</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="widget-card animate-fade delay-3">
+            <div class="widget-header">
+                <h2 class="widget-title">4. SingleChildScrollView Widget</h2>
+                <div class="widget-icon">
+                    <i class="fas fa-scroll"></i>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-question-circle"></i>ما هي ويدجت SingleChildScrollView؟</h3>
+                    <p>SingleChildScrollView هي ويدجت تُنشئ منطقة قابلة للتمرير تحتوي على عنصر واحد (عادة Column أو Row). تسمح هذه الويدجت بعرض محتوى أكبر من المساحة المتاحة على الشاشة عن طريق التمرير.</p>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-tools"></i>المشكلة التي تحلها</h3>
+                    <p>بدون SingleChildScrollView، قد تواجه:</p>
+                    <ul style="padding-right: 20px; margin-top: 10px;">
+                        <li>ظهور تحذير "overflow" عندما يكون المحتوى أكبر من الشاشة</li>
+                        <li>عدم القدرة على رؤية المحتوى الذي يتجاوز حدود الشاشة</li>
+                        <li>صعوبة في التعامل مع لوحات المفاتيح التي تغطي جزءًا من الشاشة</li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-lightbulb"></i>متى نستخدمها؟</h3>
+                    <div class="grid">
+                        <div class="feature-box">
+                            <h4 class="feature-title">النماذج الطويلة</h4>
+                            <p>عندما يكون لديك نموذج إدخال به العديد من الحقول.</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4 class="feature-title">المحتوى الطويل</h4>
+                            <p>لعرض مقالات أو نصوص طويلة تتجاوز حجم الشاشة.</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4 class="feature-title">القوائم المخصصة</h4>
+                            <p>عندما تريد إنشاء قائمة مخصصة بدلاً من ListView.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title"><i class="fas fa-code"></i>مثال عملي</h3>
+                    <div class="code-block">
+                        <pre>
+SingleChildScrollView(
+  padding: EdgeInsets.all(16.0),
+  child: Column(
+    children: &lt;Widget&gt;[
+      Text('عنوان المقال', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+      SizedBox(height: 20),
+      Text('هذا هو النص الكامل للمقال...', style: TextStyle(fontSize: 16)),
+      SizedBox(height: 20),
+      Image.network('https://example.com/article-image.jpg'),
+      SizedBox(height: 20),
+      Text('استمرار النص...', style: TextStyle(fontSize: 16)),
+      // يمكن إضافة المزيد من المحتوى هنا
+    ],
+  ),
+)</pre>
+                    </div>
+                    
+                    <div class="example-preview">
+                        <h4 class="example-title"><i class="fas fa-eye"></i> كيف سيظهر التصميم</h4>
+                        <div style="height: 200px; overflow-y: scroll; border: 1px solid #ddd; padding: 16px; position: relative;">
+                            <h3 style="font-size: 24px; font-weight: bold; margin-bottom: 20px;">عنوان المقال</h3>
+                            <p style="font-size: 16px; margin-bottom: 20px;">هذا هو النص الكامل للمقال الذي قد يكون طويلاً جداً ويتجاوز حجم الشاشة، لذلك نستخدم SingleChildScrollView للسماح للمستخدم بالتمرير لأسفل لقراءة بقية المحتوى.</p>
+                            <div style="height: 100px; background: #eee; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;">صورة المقال</div>
+                            <p style="font-size: 16px;">استمرار النص الذي يمكن أن يمتد لعدة شاشات...</p>
+                            <div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.5); color: white; padding: 2px 5px; border-radius: 3px; font-size: 12px;">مثال التمرير</div>
+                        </div>
+                    </div>
+                    
+                    <div class="note">
+                        <div class="note-title">مقارنة مع ListView</div>
+                        <p>يختلف SingleChildScrollView عن ListView في أن:</p>
+                        <ul style="padding-right: 20px; margin-top: 10px;">
+                            <li>SingleChildScrollView تحمل كل المحتوى في الذاكرة مرة واحدة</li>
+                            <li>ListView تبني العناصر عند الحاجة فقط (Lazy loading)</li>
+                            <li>استخدم ListView للقوائم الطويلة جدًا لتوفير الذاكرة</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 دليل Flutter المتكامل | تم التصميم بعناية لتوفير أفضل تجربة تعلم</p>
+            <div style="margin-top: 15px;">
+                <a href="#" style="color: white; margin: 0 10px;"><i class="fab fa-twitter"></i></a>
+                <a href="#" style="color: white; margin: 0 10px;"><i class="fab fa-github"></i></a>
+                <a href="#" style="color: white; margin: 0 10px;"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
