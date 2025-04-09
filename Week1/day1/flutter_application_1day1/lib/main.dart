@@ -10,7 +10,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyApp();
+    return const MaterialApp(home:Text("F"));
   }
 }
 
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
                       const Column(
                         children: [
                           Text(
-                            "Hi,bebo",
+                            "Hi,beo",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -114,9 +114,9 @@ class MyApp extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      //  EmojjiFace(emojiFace: "😒",textEmotion: "bad"),
-                      //  EmojjiFace(emojiFace: "💕",textEmotion: "good"),
-                      //  EmojjiFace(emojiFace: "❤️😍",textEmotion: "happy"),
+                       EmojjiFace(emojiFace: "😒",textEmotion: "bad"),
+                       EmojjiFace(emojiFace: "💕",textEmotion: "good"),
+                       EmojjiFace(emojiFace: "❤️😍",textEmotion: "happy"),
 
                       // After
 
@@ -154,6 +154,15 @@ class MyApp extends StatelessWidget {
                             topLeft: Radius.circular(20),
                             topRight: Radius.circular(20)),
                         color: Colors.white,
+                      ),
+                      child: const Column(
+                        children: [
+                          Row(children: [
+                            
+                          ],),
+                          Row(),
+                          Row(),
+                        ],
                       ),
                     ),
                   )
@@ -198,5 +207,156 @@ class EmojjiFace extends StatelessWidget {
     );
 
     // Padding(padding: EdgeInsets.all(10), child: Text("badly" ,style: TextStyle(fontSize: 16,color: Colors.white), ))
+  }
+}
+
+
+class MyApp1 extends StatelessWidget {
+  const MyApp1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('My App'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Header Section
+              Container(
+                height: 200,
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  image: DecorationImage(
+                    image: NetworkImage('https://example.com/image.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    'Welcome',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              
+              // Content Section
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    // Feature Cards
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _buildFeatureCard(Icons.star, 'Feature 1'),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: _buildFeatureCard(Icons.favorite, 'Feature 2'),
+                        ),
+                      ],
+                    ),
+                    
+                    const SizedBox(height: 20),
+                    
+                    // List Items
+              Row(
+                children: [
+                  const Icon(Icons.star, color: Colors.blue),
+                  const SizedBox(width: 10),
+                  const Column(
+                    children: [
+                      Text('عنصر الصف الأول'),
+                      Text('عنصر الصف الأول' ,style: TextStyle(fontSize: 12),),
+                    ],
+                  ),
+                  const Spacer(), // لملء المساحة الفارغة
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+
+              const SizedBox(
+                height: 40,
+              ), 
+               Row(
+                children: [
+                  const Icon(Icons.car_crash_outlined, color: Colors.blue),
+                  const SizedBox(width: 10),
+                  const Column(
+                    children: [
+                      Text('عنصر الصف الأول'),
+                      Text('عنصر الصف الأول' ,style: TextStyle(fontSize: 12),),
+                    ],
+                  ),
+                  const Spacer(), // لملء المساحة الفارغة
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ), 
+        Row(
+                children: [
+                  const Icon(Icons.star, color: Colors.blue),
+                  const SizedBox(width: 10),
+                  const Column(
+                    children: [
+                      Text('عنصر الصف الأول'),
+                      Text('عنصر الصف الأول' ,style: TextStyle(fontSize: 12),),
+                    ],
+                  ),
+                  const Spacer(), // لملء المساحة الفارغة
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        
+
+        ),
+      );
+  
+  }
+  
+  Widget _buildFeatureCard(IconData icon, String text) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Icon(icon, size: 40, color: Colors.blue),
+            const SizedBox(height: 10),
+            Text(text),
+                    ],
+        ),
+      ),
+    );
   }
 }

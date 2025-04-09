@@ -1,0 +1,17 @@
+ Row(
+                children: [
+                  const Icon(Icons.star, color: Colors.blue),
+                  const SizedBox(width: 10),
+                  Column(
+                    children: [
+                      const Text('عنصر الصف الأول'),
+                      const Text('عنصر الصف الأول' ,style: TextStyle(fontSize: 12),),
+                    ],
+                  ),
+                  const Spacer(), // لملء المساحة الفارغة
+                  IconButton(
+                    icon: const Icon(Icons.arrow_forward),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
